@@ -1,3 +1,3 @@
-import HolographicCard from "./card";
+import { HoloCard2 } from "./card";
 
-export default HolographicCard;
+export { HoloCard2 };

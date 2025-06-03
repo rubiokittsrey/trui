@@ -1,25 +1,20 @@
-import React, {
-   useState,
-   useEffect,
-   useRef,
-   useMemo,
-   CSSProperties,
-} from "react";
+import React, { CSSProperties, useEffect, useMemo, useRef, useState } from "react";
+import "./styles.css";
+import { cn } from "@/lib/utils";
 
-function Stage({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-   return (
-      <div {...props} className="stage">
-         {children}
-      </div>
-   );
-}
-
-function Card({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+export function Card({children, className, ...props}: React.HTMLAttributes<HTMLDivElement>) {
+   const [pointer, setPointer] = useState<{ x: number; y: number }>({ x: 240, y: 160 });
    const cardRef = useRef<HTMLDivElement | null>(null);
-   const [pointer, setPointer] = useState<{ x: number; y: number }>({
-      x: 240,
-      y: 160,
-   });
+
+   useEffect(() => {
+      function updatePointer(e: PointerEvent) {
+         setPointer({ x: e.clientX, y:e.clientY });
+      }
+      document.addEventListener("pointermove", updatePointer, true);
+      return () => {
+         document.removeEventListener("pointermove", updatePointer);
+      }
+   }, []);
 
    const cardStyles = useMemo<CSSProperties>(() => {
       if (!cardRef.current) return {};
@@ -32,7 +27,7 @@ function Card({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) {
 
       const spX = Math.min(Math.max(pX, 0), 1);
       const spY = Math.min(Math.max(pY, 0), 1);
-
+      
       const aX = pointer.x / window.innerWidth;
       const aY = pointer.y / window.innerHeight;
 
@@ -46,29 +41,29 @@ function Card({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) {
       } as CSSProperties;
    }, [pointer]);
 
-   useEffect(() => {
-      function updatePointer(e: PointerEvent) {
-         setPointer({ x: e.clientX, y: e.clientY });
-      }
-      document.addEventListener("pointermove", updatePointer, true);
-      return () => {
-         document.removeEventListener("pointermove", updatePointer);
-      };
-   }, []);
-
    return (
-      <div {...props} className="card" ref={cardRef} style={cardStyles}>
+      <div
+         {...props}
+         className={cn(
+            "relative w-[13em] h-[16em] rounded-[0.75em] bg-neutral-800 text-white overflow-hidden",
+            "backface-hidden will-change-transform", className
+         )}
+         ref={cardRef}
+         style={{...cardStyles, transform: "rotateX(var(--rx)) rotateY(var(--ry))"}}
+      >
          {children}
       </div>
    );
 }
 
-function Foil({ ...props }: React.HTMLAttributes<HTMLDivElement>) {
-   return <div {...props} className="foil" />;
+export function Foil() {
+   return (
+      <div className="foil absolute top-0 right-0 left-0 bottom-0"/>
+   )
 }
 
-function Glare({ ...props }: React.HTMLAttributes<HTMLDivElement>) {
-   return <div {...props} className="glare" />;
+export function Glare() {
+   return (
+      <div className="glare absolute top-0 right-0 left-0 bottom-0"/>
+   )
 }
-
-export { Stage, Card, Foil, Glare };

@@ -1,12 +1,11 @@
-import HolographicCard from "@/components/holographic-card";
+import { HoloCard2 } from "@/components/holographic-card";
 
 export default function HolographicCardDemo() {
    return (
-      <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-         <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-            <HolographicCard />
-         </main>
-         <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center"></footer>
+      <div className="h-full w-full space-x-5 flex items-center justify-center">
+         <HoloCard2>
+            <h2>asfas</h2>
+         </HoloCard2>
       </div>
    );
 }

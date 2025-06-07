@@ -1,0 +1,70 @@
+:root {
+    --mx: 50%;
+    --my: 50%;
+    --s: 1;
+    --o: 0;
+    --tx: 0px;
+    --ty: 0px;
+    --rx: 0deg;
+    --ry: 0deg;
+    --pos: 50% 50%;
+    --posx: 50%;
+    --posy: 50%;
+    --hyp: 1;
+}
+
+.is_overlay {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.card__shine {
+    --space: 20%;
+    --angle: 133deg;
+    --imgsize: 41.5% 50%;
+    background-image: 
+        url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCI+CjxmaWx0ZXIgaWQ9Im4iPgo8ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjciIG51bU9jdGF2ZXM9IjEwIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIj48L2ZlVHVyYnVsZW5jZT4KPC9maWx0ZXI+CjxyZWN0IHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIiBmaWxsPSIjMDAwIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIiBmaWx0ZXI9InVybCgjbikiIG9wYWNpdHk9IjAuMyI+PC9yZWN0Pgo8L3N2Zz4="),
+        url("https://res.cloudinary.com/simey/image/upload/Dev/PokemonCards/vmaxbg.webp"),
+        repeating-linear-gradient(
+            -33deg,
+            rgb(206, 42, 36) calc(var(--space) * 1),
+            rgb(157, 170, 223) calc(var(--space) * 2),
+            rgb(45, 153, 146) calc(var(--space) * 3),
+            rgb(39, 204, 140) calc(var(--space) * 4),
+            rgb(36, 183, 223) calc(var(--space) * 5),
+            rgb(206, 42, 36) calc(var(--space) * 6)
+        ),
+        repeating-linear-gradient(
+            var(--angle),
+            rgba(6, 10, 22, 0.5) 0%,
+            hsl(180, 15%, 53%) 2.5%,
+            hsl(83, 50%, 35%) 5%,
+            hsl(180, 10%, 50%) 7.5%,
+            rgba(6, 10, 22, 0.5) 10%,
+            rgba(6, 10, 22, 0.5) 15%
+        ),
+        radial-gradient(
+            farthest-corner circle at var(--mx) var(--my),
+            rgba(6, 218, 255, 0.6) 0%,
+            rgba(38, 235, 127, 0.6) 25%,
+            rgba(155, 78, 228, 0.6) 50%,
+            rgba(228, 78, 90, 0.6) 75%
+        );
+
+    background-blend-mode: screen, soft-light, screen, darken, soft-light;
+    background-size: 50% 50%, var(--imgsize), 1100% 1100%, 600% 600%, 200% 200%;
+    background-position: center, center, 0% var(--posy), var(--posx) var(--posy),
+        var(--posx) var(--posy);
+
+    filter: brightness(calc((var(--hyp) * 0.3) + 0.5)) contrast(3)
+        saturate(0.55);
+}
+
+.card {
+   transform: rotateX(var(--rx)) rotateY(var(--ry));
+}

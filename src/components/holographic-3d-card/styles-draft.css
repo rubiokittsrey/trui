@@ -1,0 +1,141 @@
+:root {
+    --mx: 50%;
+    --my: 50%;
+    --s: 1;
+    --o: 0;
+    --tx: 0px;
+    --ty: 0px;
+    --rx: 0deg;
+    --ry: 0deg;
+    --pos: 50% 50%;
+    --posx: 50%;
+    --posy: 50%;
+    --hyp: 0;
+}
+
+.card {
+    --radius: 4.55% / 3.5%;
+    z-index: calc(var(--s) * 100);
+    transform: translate3d(0, 0, 0.1px);
+    will-change: transform, visibility;
+    transform-style: preserve-3d;
+}
+
+.card.interacting {
+    z-index: calc(var(--s) * 120);
+}
+
+.card.active .card__translater,
+.card.active .card__rotator {
+    touch-action: none;
+}
+
+.card__translater,
+.card__rotator {
+    display: grid;
+    perspective: 600px;
+    transform-origin: center;
+    will-change: transform;
+}
+
+.card__translater {
+    width: auto;
+    position: relative;
+    transform: translate3d(var(--tx), var(--ty), 0) scale(var(--s));
+}
+
+.card__rotator {
+    --glow: #69d1e9;
+    transform: rotateY(var(--rx)) rotateX(var(--ry));
+    transform-style: preserve-3d;
+    box-shadow: 0px 10px 20px -5px black;
+    border-radius: var(--radius);
+    outline: none;
+    transition: box-shadow 0.4s ease, outline 0.2s ease;
+}
+
+.card.active .card__rotator {
+    box-shadow: 0 0 10px 0px var(--glow), 0 0 10px 0px var(--glow),
+        0 0 30px 0px var(--glow);
+}
+
+.card__rotator:focus {
+    box-shadow: 0 0 10px 0px var(--glow), 0 0 10px 0px var(--glow),
+        0 0 30px 0px var(--glow);
+}
+
+.card.active .card__rotator:focus {
+    box-shadow: 0px 10px 30px 3px black;
+}
+
+.card__rotator * {
+    width: 100%;
+    display: grid;
+    grid-area: 1/1;
+    border-radius: var(--radius);
+    image-rendering: optimizeQuality;
+    transform-style: preserve-3d;
+}
+
+.card__back {
+    transform: rotateY(180deg);
+    backface-visibility: visible;
+}
+
+.card__front,
+.card__front * {
+    backface-visibility: hidden;
+}
+
+.card__front {
+    opacity: 1;
+    transition: opacity 0.2s ease-out;
+}
+
+.loading .card__front {
+    opacity: 0;
+}
+
+.loading .card__back {
+    transform: rotateY(0deg);
+}
+
+.card__shine {
+    --space: 6%;
+    --angle: 133deg;
+    --imgsize: 60% 30%;
+    background-image: url("https://res.cloudinary.com/simey/image/upload/Dev/PokemonCards/vmaxbg.webp"),
+        repeating-linear-gradient(
+            -33deg,
+            rgb(206, 42, 36) calc(var(--space) * 1),
+            rgb(157, 170, 223) calc(var(--space) * 2),
+            rgb(45, 153, 146) calc(var(--space) * 3),
+            rgb(29, 151, 36) calc(var(--space) * 4),
+            rgb(181, 64, 228) calc(var(--space) * 5),
+            rgb(206, 42, 36) calc(var(--space) * 6)
+        ),
+        repeating-linear-gradient(
+            var(--angle),
+            rgba(14, 21, 46, 0.5) 0%,
+            hsl(180, 10%, 50%) 2.5%,
+            hsl(83, 50%, 35%) 5%,
+            hsl(180, 10%, 50%) 7.5%,
+            rgba(14, 21, 46, 0.5) 10%,
+            rgba(14, 21, 46, 0.5) 15%
+        ),
+        radial-gradient(
+            farthest-corner circle at var(--rx) var(--ry),
+            rgba(6, 218, 255, 0.6) 0%,
+            rgba(38, 235, 127, 0.6) 25%,
+            rgba(155, 78, 228, 0.6) 50%,
+            rgba(228, 78, 90, 0.6) 75%
+        );
+
+    background-blend-mode: normal, normal, multiply;
+    background-size: var(--imgsize), 1100% 1100%, 600% 600%, 200% 200%;
+    background-position: center, 0% var(--posy), var(--posx) var(--posy),
+        var(--posx) var(--posy);
+
+    filter: brightness(calc((var(--hyp) * 0.3) + 0.5)) contrast(2.5)
+        saturate(0.6);
+}
